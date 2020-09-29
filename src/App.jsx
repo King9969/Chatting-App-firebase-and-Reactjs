@@ -9,8 +9,6 @@ import "firebase/analytics";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-import Button from "@material-ui/core/Button";
-
 firebase.initializeApp({
   // your config
   apiKey: "AIzaSyDBicwW47LwJHq-TGzLHA8K1j5f3uviZIQ",
@@ -25,7 +23,6 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-const analytics = firebase.analytics();
 
 function App() {
   const [user] = useAuthState(auth);
@@ -33,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <a href="https://king.htmlsave.net/">🎵MUSIC PLAYER🎵</a>
+        <a href="https://king.htmlsave.net/">MUSIC PLAYER</a>
       </header>
 
       <section>{user ? <ChatRoom /> : <SignIn />}</section>
@@ -114,6 +111,7 @@ function ChatMessage(props) {
           src={
             photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
           }
+          alt="img"
         />
         <p>{text}</p>
       </div>
