@@ -1,4 +1,4 @@
-html {
+html {font-family: 'Sansita Swashed', cursive;
   font-size: 62.5%;
 }
 
@@ -124,9 +124,9 @@ p {
 }
 
 .sent p {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: rgb(0, 0, 0);
-  background: #0eecec;
+  background: #0bf636;
   align-self: flex-end;
 }
 .received p {
