@@ -1,173 +1,117 @@
-html {
-  font-size: 62.5%;
+import React, { useRef, useState } from "react";
+import "./App.css";
+
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import "firebase/analytics";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+
+firebase.initializeApp({
+  // your config
+  apiKey: "AIzaSyDBicwW47LwJHq-TGzLHA8K1j5f3uviZIQ",
+  authDomain: "certain-benefit-236406.firebaseapp.com",
+  databaseURL: "https://certain-benefit-236406.firebaseio.com",
+  projectId: "certain-benefit-236406",
+  storageBucket: "certain-benefit-236406.appspot.com",
+  messagingSenderId: "813229051011",
+  appId: "1:813229051011:web:2a5cce6cf528c0598d9fb6",
+  measurementId: "G-QCQ8MZF8VT",
+});
+
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+
+function App() {
+  const [user] = useAuthState(auth);
+
+  return (
+    <div className="App">
+      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+    </div>
+  );
 }
 
-body {
-  background-image: url("back.jpg");
+function SignIn() {
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);
+  };
+
+  return (
+    <button  onClick={signInWithGoogle}>
+      Sign in with Google
+    </button>
+  );
 }
 
-.App {
-  text-align: center;
-  max-width: 30rem;
-}
-a {
-  text-align: center;
-  font-size: 4rem;
-  color: #0bf6f6;
-  text-decoration: none;
+function ChatRoom() {
+  const dummy = useRef();
+  const messagesRef = firestore.collection("messages");
+  const query = messagesRef.orderBy("createdAt").limit(25);
+
+  const [messages] = useCollectionData(query, { idField: "id" });
+
+  const [formValue, setFormValue] = useState("");
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    const { uid, photoURL } = auth.currentUser;
+
+    await messagesRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL,
+    });
+
+    setFormValue("");
+    dummy.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <>
+      <main>
+        {messages &&
+          messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
+
+        <span ref={dummy}></span>
+      </main>
+
+      <form onSubmit={sendMessage}>
+        <input
+          value={formValue}
+          onChange={(e) => setFormValue(e.target.value)}
+        />
+        <button type="submit" disabled={!formValue}>
+          SEND
+        </button>
+      </form>
+    </>
+  );
 }
 
-.App section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 90vh;
-  align-items: center;
-  width: 40rem;
-  height: 5rem;
-  padding: 1vh 0 1vh;
-  border-radius: 63px;
+function ChatMessage(props) {
+  const { text, uid, photoURL } = props.message;
 
-  box-shadow: inset 0px 0px 4px 4px #000000, inset -1px -1px 11px 0px #faf7f7;
-}
+  const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
 
-main {
-  padding: 10px;
-  height: 75vh;
-
-  overflow-y: scroll;
-  display: flex;
-
-  flex-direction: column;
+  return (
+    <>
+      <div className={`message ${messageClass}`}>
+        <img
+          src={
+            photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"
+          }
+          alt="img"
+        />
+        <p>{text}</p>
+      </div>
+    </>
+  );
 }
 
-main::-webkit-scrollbar {
-  width: 0.3rem;
-}
-
-main::-webkit-scrollbar-track {
-  background: #11ee11e24;
-}
-
-main::-webkit-scrollbar-thumb {
-  background: #6649b8;
-}
-
-form {
-  height: 10vh;
-  position: relative;
-  bottom: 0;
-
-  width: 100%;
-  max-width: 40rem;
-  display: flex;
-  font-size: 2rem;
-}
-
-form button {
-  font-size: 2.5rem;
-  border-radius: 40%;
-  width: 12rem;
-  background-color: rgb(14, 237, 245);
-}
-
-input {
-  border-radius: 3rem;
-  line-height: 1.5;
-  width: 80%;
-  font-size: 2rem;
-  background-color: #282c34;
-  color: white;
-  outline: none;
-  border: rgb(0, 255, 242) solid 0.3rem;
-  padding: 0 10px;
-}
-
-button:disabled {
-  border-radius: 40%;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.sign-in {
-  color: #282c34;
-  background-color: greenyellow;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-ul,
-li {
-  text-align: left;
-  list-style: none;
-}
-
-p {
-  max-width: 500px;
-  margin-bottom: 12px;
-  line-height: 24px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  position: relative;
-  color: white;
-  text-align: center;
-}
-
-.message {
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-}
-
-.sent {
-  flex-direction: row-reverse;
-}
-
-.sent p {
-  font-size: 2rem;
-  color: rgb(0, 0, 0);
-  background: #0eecec;
-  align-self: flex-end;
-}
-.received p {
-  font-size: 1.5rem;
-  background: #e5e5ea;
-  color: black;
-}
-
-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin: 2px 5px;
-}
-.App button {
-  background-color: #4caf50; /* Green */
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 2rem;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-.App button {
-  background-color: #f9faf9; /* Green */
-  border: none;
-  color: rgb(0, 0, 0);
-  padding: 16px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 2rem;
-  margin: 4px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-}
-.App button:hover {
-  background-color: #08f308; /* Green */
-  color: white;
-}
+export default App;
