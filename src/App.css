@@ -155,6 +155,7 @@ img {
   cursor: pointer;
 }
 .App button {
+  border-radius: 20%;
   background-color: #f9faf9; /* Green */
   border: none;
   color: rgb(0, 0, 0);
@@ -170,4 +171,5 @@ img {
 .App button:hover {
   background-color: #08f308; /* Green */
   color: white;
+  border-radius: 30%;
 }
