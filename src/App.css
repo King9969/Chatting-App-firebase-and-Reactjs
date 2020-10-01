@@ -3,18 +3,16 @@ html {
 }
 
 body {
-  align-items: center;
-  background-color: #2f3132;
+  background-image: url("back.jpg");
 }
 
 .App {
   text-align: center;
   max-width: 30rem;
-  margin: 0 auto;
 }
 a {
   text-align: center;
-  font-size: 3rem;
+  font-size: 4rem;
   color: #0bf6f6;
   text-decoration: none;
 }
@@ -23,31 +21,32 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100vh;
-
+  min-height: 90vh;
+  align-items: center;
   width: 40rem;
   height: 5rem;
-
+  padding: 1vh 0 1vh;
   border-radius: 63px;
-  background: #2f3132;
+
   box-shadow: inset 0px 0px 4px 4px #000000, inset -1px -1px 11px 0px #faf7f7;
 }
 
 main {
   padding: 10px;
-  height: 80vh;
-  margin: 10vh 0 10vh;
+  height: 75vh;
+
   overflow-y: scroll;
   display: flex;
+
   flex-direction: column;
 }
 
 main::-webkit-scrollbar {
-  width: 0.25rem;
+  width: 0.3rem;
 }
 
 main::-webkit-scrollbar-track {
-  background: #1e1e24;
+  background: #11ee11e24;
 }
 
 main::-webkit-scrollbar-thumb {
@@ -56,16 +55,18 @@ main::-webkit-scrollbar-thumb {
 
 form {
   height: 10vh;
-  position: fixed;
+  position: relative;
   bottom: 0;
-  background-color: rgb(24, 23, 23);
+
   width: 100%;
   max-width: 40rem;
   display: flex;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 form button {
+  font-size: 2.5rem;
+  border-radius: 40%;
   width: 12rem;
   background-color: rgb(14, 237, 245);
 }
@@ -73,9 +74,9 @@ form button {
 input {
   border-radius: 3rem;
   line-height: 1.5;
-  width: 100%;
-  font-size: 1.5rem;
-  background: rgb(58, 58, 58);
+  width: 80%;
+  font-size: 2rem;
+  background-color: #282c34;
   color: white;
   outline: none;
   border: rgb(0, 255, 242) solid 0.3rem;
@@ -83,13 +84,14 @@ input {
 }
 
 button:disabled {
+  border-radius: 40%;
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 .sign-in {
   color: #282c34;
-
+  background-color: greenyellow;
   max-width: 400px;
   margin: 0 auto;
 }
@@ -112,7 +114,7 @@ p {
 }
 
 .message {
-  font-size: 1rem;
+  font-size: 2rem;
   display: flex;
   align-items: center;
 }
@@ -122,13 +124,13 @@ p {
 }
 
 .sent p {
-  font-size: 1.3rem;
+  font-size: 2rem;
   color: rgb(0, 0, 0);
   background: #0eecec;
   align-self: flex-end;
 }
 .received p {
-  font-size: 1rem;
+  font-size: 1.5rem;
   background: #e5e5ea;
   color: black;
 }
@@ -139,5 +141,33 @@ img {
   border-radius: 50%;
   margin: 2px 5px;
 }
-
-
+.App button {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.App button {
+  background-color: #f9faf9; /* Green */
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 2rem;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+.App button:hover {
+  background-color: #08f308; /* Green */
+  color: white;
+}
