@@ -6,7 +6,8 @@ import "./index.css";
 ReactDOM.render(
   <>
     <App />
-    <h1>DM me will add your playlist too & login and refresh to play songs  </h1>
+    <h1>DM me will add your playlist too  </h1>
+   <h1>login and refresh to play songs  </h1>
     <iframe
       src="https://open.spotify.com/embed?uri=spotify%3Aplaylist%3A37i9dQZF1DX1ct2TQrAvRf"
       width="400"
