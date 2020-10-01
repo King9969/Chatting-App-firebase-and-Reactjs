@@ -29,6 +29,10 @@ function App() {
 
   return (
     <div className="App">
+      <header>
+        <h2>WELCOME</h2>
+      </header>
+
       <section>{user ? <ChatRoom /> : <SignIn />}</section>
     </div>
   );
@@ -41,10 +45,11 @@ function SignIn() {
   };
 
   return (
-    <button  onClick={signInWithGoogle}>
-      Sign in with Google
-    </button>
-  );
+
+    <button onClick={signInWithGoogle}>Sign in with Google</button>
+
+
+  )
 }
 
 function ChatRoom() {
@@ -65,8 +70,8 @@ function ChatRoom() {
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
-      photoURL,
-    });
+      photoURL
+    })
 
     setFormValue("");
     dummy.current.scrollIntoView({ behavior: "smooth" });
@@ -111,7 +116,7 @@ function ChatMessage(props) {
         <p>{text}</p>
       </div>
     </>
-  );
+  )
 }
 
 export default App;
