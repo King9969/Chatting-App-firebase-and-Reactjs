@@ -34,7 +34,7 @@ a {
 main {
   padding: 10px;
   height: 75vh;
-
+  min-width: 35rem;
   overflow-y: scroll;
   display: flex;
 
